@@ -8,6 +8,7 @@ import Professores from '../components/pages/Professores'
 import Materias from '../components/pages/Materias'
 import Login from '../components/pages/Login'
 import NotFound from '../components/pages/NotFound'
+import Usuarios from '../components/pages/Usuarios'
 
 // Layouts
 import NavbarLayout from '../components/layouts/NavbarLayout'
@@ -66,7 +67,7 @@ function AppRouter() {
                   path="/usuarios"
                   element={
                     <ProtectedLayout>
-                      <Materias />
+                      <Usuarios />
                     </ProtectedLayout>
                   }
                 />
