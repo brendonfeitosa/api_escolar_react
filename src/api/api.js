@@ -1,10 +1,12 @@
 import axios from 'axios'
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-})
+// 🚀 Se a variável de ambiente não estiver definida, assume o localhost
+const baseURL =
+  import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000'
 
-// 🔐 Interceptor: adiciona o token em todas as requisições
+const api = axios.create({ baseURL })
+
+// 🔐 Interceptor: adiciona o token Basic em todas as requisições
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('authToken')
