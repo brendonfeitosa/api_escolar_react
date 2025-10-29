@@ -96,7 +96,10 @@ function Professores() {
       }
 
       if (editMode) {
-        await api.put('/professores/', { ...formData, idade: Number(formData.idade) })
+        await api.put('/professores/', {
+          ...formData,
+          idade: Number(formData.idade),
+        })
         const updated = professores.map((p) =>
           p.id === formData.id ? formData : p
         )
@@ -104,7 +107,10 @@ function Professores() {
         setFilteredProfessores(updated)
         alert('Professor atualizado com sucesso!')
       } else {
-        const res = await api.post('/professores/', { ...formData, idade: Number(formData.idade) })
+        const res = await api.post('/professores/', {
+          ...formData,
+          idade: Number(formData.idade),
+        })
         const newList = [...professores, res.data]
         setProfessores(newList)
         setFilteredProfessores(newList)
@@ -138,34 +144,36 @@ function Professores() {
   // 🧩 Loading / erro
   if (loading)
     return (
-      <div className="d-flex justify-content-center mt-5">
+      <div className="d-flex justify-content-center align-items-center mt-5">
         <Spinner animation="border" variant={darkMode ? 'light' : 'primary'} />
       </div>
     )
 
   if (error)
     return (
-      <Alert variant={darkMode ? 'dark' : 'danger'} className="mt-4">
-        Erro ao carregar professores.
-      </Alert>
+      <Container className="mt-4">
+        <Alert
+          variant={darkMode ? 'dark' : 'danger'}
+          className="text-center shadow-sm"
+        >
+          Erro ao carregar professores.
+        </Alert>
+      </Container>
     )
 
-  // 🧩 Interface completa
+  // 🧩 Interface (alinhamento igual ao de Alunos)
   return (
     <Container className="mt-4">
-      <h2 className="text-primary fw-bold mb-4 text-center">
-        Lista de Professores
-      </h2>
+      <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 className="text-primary fw-bold mb-0">Lista de Professores</h2>
 
-      {/* 🔍 Área de filtro + botão novo */}
-      <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-        <div className="d-flex justify-content-center align-items-center gap-2 flex-wrap mx-auto">
+        <div className="d-flex gap-2 align-items-center">
           <Form.Control
             type="number"
             placeholder="Buscar por ID"
             value={searchId}
             onChange={(e) => setSearchId(e.target.value)}
-            style={{ width: '180px' }}
+            style={{ width: '150px' }}
           />
           <Button variant="info" onClick={handleSearch}>
             🔍 Buscar
@@ -183,7 +191,7 @@ function Professores() {
         </Button>
       </div>
 
-      {/* 🧩 Tabela */}
+      {/* 🧾 Tabela */}
       <Table
         striped
         bordered
@@ -239,7 +247,7 @@ function Professores() {
         </tbody>
       </Table>
 
-      {/* 🧩 Modal CRUD */}
+      {/* 📋 Modal CRUD */}
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header closeButton className={darkMode ? 'bg-dark text-light' : ''}>
           <Modal.Title>
